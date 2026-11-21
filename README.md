@@ -10,7 +10,7 @@ A [make.fun](https://make.fun) entry for **Read broken CSV files faster, 21 Nove
 
 csv-reader 1.0.0 is written to be plain and easy to check: one character at a time, each field built up a character at a time. This entry keeps its reading exactly and changes only how the text is traversed:
 
-- **Clean records are split whole.** A record whose line holds no quote and no stray CR is one `slice` plus one native `String.split(',')` — no per-field scan at all. Most records of a drawn set are clean.
+- **Clean records are split whole.** A record whose line holds no quote and no stray CR is one `slice` plus one native `String.split(',')` — no per-field scan at all. About a quarter of a drawn set's records are clean; the rest take the field-by-field road below.
 - **Broken fields are located, not walked.** An unquoted field ends at the next comma, LF or CR, found by a single native regex scan (`/[,\n\r]/g`) instead of three `indexOf` calls; a quoted field ends at the next quote, found with `indexOf`, doubled quotes folded in as segments are sliced.
 - **Quoted segments are slices.** A quoted segment with no line break inside is a plain slice; only a segment holding a CR or LF takes the slow road that turns CRLF and lone CR into LF and counts the lines.
 - **No allocation per field.** The unquoted reader writes into shared out-variables instead of returning a fresh object per field.

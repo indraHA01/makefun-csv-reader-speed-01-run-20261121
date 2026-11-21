@@ -6,7 +6,8 @@
 //
 //   1. A clean record (no quote, no stray CR on its line) is split whole:
 //      one slice and one native String.split(',') instead of a per-field
-//      scan. Most records of a drawn set are clean.
+//      scan. A quarter of a drawn set's records are clean; the rest take
+//      the field-by-field road below.
 //   2. Anything else is located with indexOf jumps and sliced: an unquoted
 //      field ends at the nearest comma or LF, a quoted field at the nearest
 //      quote, doubled quotes and stray CRs handled only when they appear.
